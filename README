@@ -1,0 +1,31 @@
+Vertebrae 2 Framework
+Version: 0.1.3, Last updated: 3/28/2011
+
+Project Home - http://www.vertebraejs.com
+Blog         - http://thinkdevcode.wordpress.com
+GitHub       - https://github.com/thinkdevcode/Vertebrae-2
+Contact      - ea@pexelu.com [Eugene Alfonso]
+
+See License.txt for full license
+
+Copyright (c) 2011 Eugene Alfonso,
+Licensed under the MIT license.
+
+Lib vs Vanilla
+
+The only difference between lib and vanilla, is that lib contains a map to common
+frameworks so when using require you only need to use 'jQuery' to get the latest
+jQuery library from Googles CDN. If you are using vanilla you will need to put
+the whole URL/path to the files.
+
+
+Hosted CDN
+
+Im hosting a free CDN for Vertebrae 1 and Vertebrae 2 on Amazons CloudFront.
+
+Vertebrea2:
+http://cdn.vertebraejs.com/latest/v2/lib/ -
+http://cdn.vertebraejs.com/latest/v2/vanilla/ -
+
+Vertebrae1:
+http://cdn.vertebraejs.com/latest/v2/lib/ -
