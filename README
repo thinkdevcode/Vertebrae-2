@@ -11,6 +11,8 @@ See License.txt for full license
 Copyright (c) 2011 Eugene Alfonso,
 Licensed under the MIT license.
 
+-
+
 Lib vs Vanilla
 
 The only difference between lib and vanilla, is that lib contains a map to common
@@ -18,14 +20,106 @@ frameworks so when using require you only need to use 'jQuery' to get the latest
 jQuery library from Googles CDN. If you are using vanilla you will need to put
 the whole URL/path to the files.
 
+-
 
 Hosted CDN
 
 Im hosting a free CDN for Vertebrae 1 and Vertebrae 2 on Amazons CloudFront.
 
 Vertebrea2:
-http://cdn.vertebraejs.com/latest/v2/lib/ -
-http://cdn.vertebraejs.com/latest/v2/vanilla/ -
+http://cdn.vertebraejs.com/latest/v2/lib/sync.js
+http://cdn.vertebraejs.com/latest/v2/lib/sync.min.js
+http://cdn.vertebraejs.com/latest/v2/lib/vertebrae.js
+http://cdn.vertebraejs.com/latest/v2/lib/vertebrae.min.js
+
+http://cdn.vertebraejs.com/latest/v2/vanilla/sync.js
+http://cdn.vertebraejs.com/latest/v2/vanilla/sync.min.js
+http://cdn.vertebraejs.com/latest/v2/vanilla/vertebrae.js
+http://cdn.vertebraejs.com/latest/v2/vanilla/vertebrae.min.js
 
 Vertebrae1:
-http://cdn.vertebraejs.com/latest/v1/ -
+http://cdn.vertebraejs.com/latest/v1/Vertebrae.js
+http://cdn.vertebraejs.com/latest/v1/Vertebrae.min.js
+
+-
+
+Require()
+
+Require is a basic lazy loader that keeps track of callbacks and files needed to be
+loaded/already loaded. It won't include a file twice, even if chaining require calls. 
+
+Usage
+
+Lib:
+	
+	_v.require(['jQuery', 'jQueryUI'], function() {
+		//callback fires only after both js files are loaded/parsed
+	});
+	
+	_v.require('jQuery', function() {
+		//same thing
+	});
+	
+Vanilla:
+
+	_v.require('path/to/file.js', function() {
+		//same thing
+	});
+	
+If you are requiring a file that also uses require, that callback will fire first, so
+it keeps the correct order of callbacks (LIFO).
+
+-
+
+Sync module
+
+Sync is basically the same as Vertebrae 1's data.addHandler() function. It's primary use
+is for .NET and working with WebMethods easily.
+
+To create a handler:
+
+	_v.sync({ url: 'WebMethodName' });
+	
+It will attempt to use the current filename to access the local webmethod. For example,
+if you are currently on Hello.aspx, the url it will use is 'Hello.aspx/WebMethodName'
+You can do the long way and pass in the full url as well.
+
+Other parameters you can pass in:
+
+url : the url to the service, example inputs: 'Default.aspx/Method', 'Method' [not optional]
+name : an alternative name to use for the method [optional]
+defaultName : The default page name in case JS can't find it in navbar (such as index.html, default.aspx, etc)
+
+You can pass in an array like so:
+
+	_v.sync([{ url: 'Method1' }, { url: 'Method2', name: 'dumbName' }, { url: 'Method3' }]);
+
+To use your handler:
+
+	_v.sync.WebMethodName({parameters object}, success_func, error_func, presend_func);
+	
+	or if there is no parameters:
+	
+	_v.sync.WebMethodName(success_func, error_func, presend_func);
+	
+For .NET, the parameters object you pass will need the name of the paramaters of the method.
+
+For example:
+
+(C#/.NET)
+
+	[WebMethod]
+	public static string GetGreeting(string Name)
+	{
+		return "Hello, " + Name;
+	}
+	
+(JS)
+
+	_v.sync({ url: 'GetGreeting' });
+	
+	_v.GetGreeting({ Name: 'Eugene' }, function(data) {
+		document.write(data);  // prints 'Hello, Eugene' to document
+	});
+
+-
