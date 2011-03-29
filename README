@@ -118,7 +118,7 @@ For example:
 
 	_v.sync({ url: 'GetGreeting' });
 	
-	_v.GetGreeting({ Name: 'Eugene' }, function(data) {
+	_v.sync.GetGreeting({ Name: 'Eugene' }, function(data) {
 		document.write(data);  // prints 'Hello, Eugene' to document
 	});
 
